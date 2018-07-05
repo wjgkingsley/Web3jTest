@@ -4,22 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
-    <LinearLayout
+    tools:context=".MainActivity"
+    android:orientation="vertical">
+    <Button
+        android:id="@+id/create_account_button_main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <EditText
-            android:id="@+id/create_account_password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="请在此输入密码"
-            android:layout_weight="1"
-            android:inputType="textPassword"/>
-        <Button
-            android:id="@+id/create_account"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="创建账户" />
-    </LinearLayout>
+        android:layout_height="wrap_content"
+        android:text="下载文件" />
+    <Button
+        android:id="@+id/load_account_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="下载文件" />
 
 </LinearLayout>
