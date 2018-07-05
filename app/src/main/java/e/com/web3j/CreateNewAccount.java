@@ -35,11 +35,12 @@ import java.io.OutputStreamWriter;
 public class CreateNewAccount extends AppCompatActivity implements View.OnClickListener {
     private EditText editText;
     private TextView loadTextView;
+    private TextView saveAddress;
     private String path = "/data/data/e.com.web3j/files";
     private String realPath = null;
     private String fileName = null;
     final int REQUESTCODE_FROM_ACTIVITY = 1000;
-    String TAG = "CreateNewAccount";
+    String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +49,7 @@ public class CreateNewAccount extends AppCompatActivity implements View.OnClickL
         Button createAccount = findViewById(R.id.create_account);
         editText = findViewById(R.id.create_account_password);
         loadTextView = findViewById(R.id.load_account_text_view);
+        saveAddress = findViewById(R.id.accout_address);
         Button loadAccount = findViewById(R.id.load_account_button);
         createAccount.setOnClickListener(this);
         loadAccount.setOnClickListener(this);
@@ -106,14 +108,15 @@ public class CreateNewAccount extends AppCompatActivity implements View.OnClickL
                 Credentials credentials = null;
                 try {
                     credentials = WalletUtils.loadCredentials(password, path + "/" + fileName);
+                    Log.d(TAG, "onClick: " + credentials.getAddress());
                 } catch (Exception e) {
                     e.printStackTrace();
                     Toast.makeText(this, "账户创建失败", Toast.LENGTH_SHORT).show();
                 }
-                Log.d("", "onClick: " + credentials.getAddress());
                 editText.clearFocus();
                 LinearLayout linearLayout = findViewById(R.id.load_account_linearlayout);
                 linearLayout.setVisibility(View.VISIBLE);
+                saveAddress.setText("Address: " + credentials.getAddress().substring(2));
             } else {
                 Toast.makeText(this, "账户创建失败", Toast.LENGTH_SHORT).show();
             }
@@ -126,7 +129,6 @@ public class CreateNewAccount extends AppCompatActivity implements View.OnClickL
      * @param pathName
      * @param realPath
      */
-    @SuppressLint("ResourceAsColor")
     private void loadNewAccount(String pathName, String realPath) {
         Log.d(TAG, "onClick: =========================" + path + "/" + fileName);
         Log.d(TAG, "onClick: =========================" + realPath);
@@ -136,17 +138,17 @@ public class CreateNewAccount extends AppCompatActivity implements View.OnClickL
         String json = load(pathName);
         save(json, realPath, jsonName);
         loadTextView.setText("文件下载成功");
-        loadTextView.setTextColor(R.color.colorRed);
+        loadTextView.setTextColor(getResources().getColor(R.color.colorRed));
+        loadTextView.setTextSize(24);
     }
 
     /**
-     *
      * @param json
      * @param realPath
      * @param jsonName
      */
     private void save(String json, String realPath, String jsonName) {
-        File file = new File(realPath + "/" +jsonName);
+        File file = new File(realPath + "/" + jsonName);
         BufferedWriter writer = null;
         try {
             writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));
@@ -157,7 +159,7 @@ public class CreateNewAccount extends AppCompatActivity implements View.OnClickL
             e.printStackTrace();
         } finally {
             try {
-                if (writer != null){
+                if (writer != null) {
                     writer.close();
                 }
             } catch (IOException e) {
@@ -165,6 +167,7 @@ public class CreateNewAccount extends AppCompatActivity implements View.OnClickL
             }
         }
     }
+
     private String load(String pathName) {
         BufferedReader reader = null;
         StringBuilder builder = null;

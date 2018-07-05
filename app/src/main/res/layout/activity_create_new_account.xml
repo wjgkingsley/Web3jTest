@@ -37,11 +37,17 @@
             android:layout_height="wrap_content"
             android:text="文件创建成功"
             android:textSize="18sp" />
+        <TextView
+            android:id="@+id/accout_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp" />
         <Button
             android:id="@+id/load_account_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="下载文件" />
+
     </LinearLayout>
 
 
