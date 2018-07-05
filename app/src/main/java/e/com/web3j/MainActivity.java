@@ -33,18 +33,25 @@ import java.io.OutputStreamWriter;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-
+    Intent intent;
     String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        Button createButton = findViewById(R.id.create_account_button_main);
+        createButton.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-
+        switch (v.getId()) {
+            case R.id.create_account_button_main:
+                intent = new Intent(MainActivity.this, CreateNewAccount.class);
+                startActivity(intent);
+                break;
+            default:
+        }
     }
 }

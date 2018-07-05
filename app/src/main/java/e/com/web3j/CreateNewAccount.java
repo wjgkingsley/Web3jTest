@@ -39,7 +39,7 @@ public class CreateNewAccount extends AppCompatActivity implements View.OnClickL
     private String realPath = null;
     private String fileName = null;
     final int REQUESTCODE_FROM_ACTIVITY = 1000;
-    String TAG = "MainActivity";
+    String TAG = "CreateNewAccount";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
