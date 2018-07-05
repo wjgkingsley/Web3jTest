@@ -44,7 +44,7 @@ public class CreateNewAccount extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_create_new_account);
         Button createAccount = findViewById(R.id.create_account);
         editText = findViewById(R.id.create_account_password);
         loadTextView = findViewById(R.id.load_account_text_view);

@@ -33,7 +33,6 @@ import java.io.OutputStreamWriter;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    Intent intent;
     String TAG = "MainActivity";
 
     @Override
@@ -48,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.create_account_button_main:
-                intent = new Intent(MainActivity.this, CreateNewAccount.class);
+                Intent intent = new Intent(MainActivity.this, CreateNewAccount.class);
                 startActivity(intent);
                 break;
             default:
