@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +31,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+
+import e.com.web3j.base.Config;
 
 
 public class CreateNewAccount extends AppCompatActivity implements View.OnClickListener {
@@ -64,14 +67,7 @@ public class CreateNewAccount extends AppCompatActivity implements View.OnClickL
                 createNewAccount(path, password);
                 break;
             case R.id.load_account_button:
-                new LFilePicker()
-                        .withActivity(CreateNewAccount.this)
-                        .withRequestCode(REQUESTCODE_FROM_ACTIVITY)
-                        .withMutilyMode(false)
-                        .withChooseMode(false)
-                        .withIconStyle(Constant.ICON_STYLE_GREEN)
-                        .withStartPath("/storage/emulated/0/Download")
-                        .start();
+                Config.getLFilePicker(CreateNewAccount.this,REQUESTCODE_FROM_ACTIVITY,false);
                 break;
             default:
         }
@@ -79,7 +75,6 @@ public class CreateNewAccount extends AppCompatActivity implements View.OnClickL
 
     /**
      * 创建文件
-     *
      * @param path
      * @param password
      */
@@ -125,7 +120,6 @@ public class CreateNewAccount extends AppCompatActivity implements View.OnClickL
 
     /**
      * 从pathName复制到realPath
-     *
      * @param pathName
      * @param realPath
      */
@@ -202,7 +196,7 @@ public class CreateNewAccount extends AppCompatActivity implements View.OnClickL
                 if (resultCode == RESULT_OK) {
                     realPath = data.getStringExtra("path");
                     Toast.makeText(getApplicationContext(), "The selected path is:" + realPath, Toast.LENGTH_SHORT).show();
-                    Log.d(TAG, "onClick: =========================" + realPath);
+                    Log.d(TAG, "onClick: " + realPath);
                     if (realPath != null) {
                         loadNewAccount(path + "/" + fileName, realPath);
                     } else {
