@@ -1,8 +1,8 @@
 package e.com.web3j;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -15,11 +15,13 @@ import org.web3j.crypto.CipherException;
 import org.web3j.crypto.Credentials;
 import org.web3j.crypto.RawTransaction;
 import org.web3j.crypto.TransactionEncoder;
+import org.web3j.protocol.core.methods.response.EthSendTransaction;
 import org.web3j.utils.Numeric;
 
 import java.io.IOException;
 import java.math.BigInteger;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import e.com.web3j.base.Config;
 
@@ -66,23 +68,7 @@ public class Transcation extends AppCompatActivity implements View.OnClickListen
                 Config.getLFilePicker(Transcation.this, REQUESTCODE_FROM_ACTIVITY, true);
                 break;
             case R.id.sign_transcation:
-                toAddress = toEdit.getText().toString();
-                toAddress = credentials.getAddress();
-                Log.d(TAG, "toAddress: " + toAddress);
-                if (toAddress == null || "".equals(toAddress)){
-                    toEdit.setError("打入账户不能为空");
-                }
-                value = valueEdit.getText().toString();
-                if (value == null || "".equals(value)){
-                    toEdit.setError("打入账户不能为空");
-                }
-                //TODO
-                RawTransaction rawTransaction = RawTransaction.createEtherTransaction(
-                        nonce, new BigInteger(value), new BigInteger(value), toAddress, new BigInteger(value));
-                byte[] signedMessage = TransactionEncoder.signMessage(rawTransaction,credentials);
-                Log.d(TAG, "signedMessage: " + signedMessage);
-                String hexValue = Numeric.toHexString(signedMessage);
-                Log.d(TAG, "hexValue: " + hexValue);
+                signTranscation();
                 break;
             default:
         }
@@ -132,6 +118,51 @@ public class Transcation extends AppCompatActivity implements View.OnClickListen
                 passEdit.setError("密码输入错误");
             }
 
+        }
+    }
+
+    /**
+     * 签名并且发送交易交易
+     */
+    private void signTranscation(){
+        toAddress = toEdit.getText().toString();
+        toAddress = credentials.getAddress();
+        Log.d(TAG, "toAddress: " + toAddress);
+        if (toAddress == null || "".equals(toAddress)){
+            toEdit.setError("打入账户不能为空");
+        }
+        value = valueEdit.getText().toString();
+        if (value == null || "".equals(value)){
+            toEdit.setError("打入账户不能为空");
+        }
+        //TODO
+        RawTransaction rawTransaction = RawTransaction.createEtherTransaction(
+                nonce, new BigInteger("10"), new BigInteger("20000"), toAddress, new BigInteger(value));
+        byte[] signedMessage = TransactionEncoder.signMessage(rawTransaction,credentials);
+        Log.d(TAG, "signedMessage: " + signedMessage.length);
+        String hexValue = Numeric.toHexString(signedMessage);
+        Log.d(TAG, "hexValue: " + hexValue);
+        EthSendTransaction ethSendTransaction = null;
+        TextView errorText = findViewById(R.id.error_transcation);
+        try {
+            ethSendTransaction = Config.web3j.ethSendRawTransaction(hexValue).sendAsync().get();
+            Log.d(TAG, "transactionHash: " + ethSendTransaction);
+            String transactionHash = ethSendTransaction.getTransactionHash();
+            if(transactionHash == null){
+                errorText.setVisibility(View.VISIBLE);
+                errorText.setText("交易发送失败，请重试");
+                Log.d(TAG, "transactionHash: " +  ethSendTransaction.getError().getMessage());
+            }else{
+                Log.d(TAG, "transactionHash: " + transactionHash);
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            errorText.setVisibility(View.VISIBLE);
+            errorText.setText("交易发送失败，请重试");
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+            errorText.setVisibility(View.VISIBLE);
+            errorText.setText("交易发送失败，请重试");
         }
     }
 
