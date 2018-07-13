@@ -137,7 +137,7 @@ public class Transcation extends AppCompatActivity implements View.OnClickListen
         }
         //TODO
         RawTransaction rawTransaction = RawTransaction.createEtherTransaction(
-                nonce, new BigInteger("10"), new BigInteger("20000"), toAddress, new BigInteger(value));
+                nonce, new BigInteger("10"), new BigInteger("200000"), toAddress, new BigInteger(value));
         byte[] signedMessage = TransactionEncoder.signMessage(rawTransaction,credentials);
         Log.d(TAG, "signedMessage: " + signedMessage.length);
         String hexValue = Numeric.toHexString(signedMessage);
