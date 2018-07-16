@@ -145,6 +145,7 @@ public class Transcation extends AppCompatActivity implements View.OnClickListen
         EthSendTransaction ethSendTransaction = null;
         TextView errorText = findViewById(R.id.error_transcation);
         try {
+            //发送事务
             ethSendTransaction = Config.web3j.ethSendRawTransaction(hexValue).sendAsync().get();
             Log.d(TAG, "transactionHash: " + ethSendTransaction);
             String transactionHash = ethSendTransaction.getTransactionHash();
