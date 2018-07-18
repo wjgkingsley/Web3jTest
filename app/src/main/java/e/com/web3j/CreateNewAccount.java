@@ -61,15 +61,15 @@ public class CreateNewAccount extends AppCompatActivity implements View.OnClickL
     @SuppressLint("ResourceAsColor")
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.create_account:
-                String password = editText.getText().toString().trim();
-                createNewAccount(path, password);
-                break;
-            case R.id.load_account_button:
-                Config.getLFilePicker(CreateNewAccount.this,REQUESTCODE_FROM_ACTIVITY,false);
-                break;
-            default:
+        int i = v.getId();
+        if (i == R.id.create_account) {
+            String password = editText.getText().toString().trim();
+            createNewAccount(path, password);
+
+        } else if (i == R.id.load_account_button) {
+            Config.getLFilePicker(CreateNewAccount.this, REQUESTCODE_FROM_ACTIVITY, false);
+
+        } else {
         }
     }
 

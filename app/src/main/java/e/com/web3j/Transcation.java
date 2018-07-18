@@ -62,15 +62,15 @@ public class Transcation extends AppCompatActivity implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.read_account_transcation:
-                password = passEdit.getText().toString();
-                Config.getLFilePicker(Transcation.this, REQUESTCODE_FROM_ACTIVITY, true);
-                break;
-            case R.id.sign_transcation:
-                signTranscation();
-                break;
-            default:
+        int i = v.getId();
+        if (i == R.id.read_account_transcation) {
+            password = passEdit.getText().toString();
+            Config.getLFilePicker(Transcation.this, REQUESTCODE_FROM_ACTIVITY, true);
+
+        } else if (i == R.id.sign_transcation) {
+            signTranscation();
+
+        } else {
         }
     }
 

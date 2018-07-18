@@ -6,33 +6,32 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class StartActivity extends AppCompatActivity implements View.OnClickListener{
     String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Button createButton = findViewById(R.id.create_account_main);
+        setContentView(R.layout.activity_start);
+        Button createButton = findViewById(R.id.create_account_start);
         createButton.setOnClickListener(this);
-        Button signButton = findViewById(R.id.sign_mainactivity);
+        Button signButton = findViewById(R.id.sign_start);
         signButton.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-        Intent intent = null;
         int i = v.getId();
-        if (i == R.id.create_account_main) {
-            intent = new Intent(MainActivity.this, CreateNewAccount.class);
+        if (i == R.id.create_account_start) {
+            Intent intent = new Intent(StartActivity.this, CreateNewAccount.class);
             startActivity(intent);
 
-        } else if (i == R.id.sign_mainactivity) {
-            intent = new Intent(MainActivity.this, Transcation.class);
+        } else if (i == R.id.sign_start) {
+            Intent intent = new Intent(StartActivity.this, Transcation.class);
             startActivity(intent);
 
         } else {
         }
     }
 }
+

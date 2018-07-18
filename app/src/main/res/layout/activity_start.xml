@@ -7,12 +7,12 @@
     android:orientation="vertical">
 
     <Button
-        android:id="@+id/create_account_main"
+        android:id="@+id/create_account_start"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="创建账户" />
     <Button
-        android:id="@+id/sign_mainactivity"
+        android:id="@+id/sign_start"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="签名" />
