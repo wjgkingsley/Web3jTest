@@ -89,9 +89,10 @@ public class Transcation extends AppCompatActivity implements View.OnClickListen
 
     /**
      * 读取文件
+     *
      * @param data
      */
-    private void readAccount(Intent data){
+    private void readAccount(Intent data) {
 
         List<String> list = data.getStringArrayListExtra("paths");
         Toast.makeText(getApplicationContext(), "The selected path is:" + list,
@@ -124,21 +125,22 @@ public class Transcation extends AppCompatActivity implements View.OnClickListen
     /**
      * 签名并且发送交易交易
      */
-    private void signTranscation(){
+    private void signTranscation() {
         toAddress = toEdit.getText().toString();
+        //TODO
         toAddress = credentials.getAddress();
         Log.d(TAG, "toAddress: " + toAddress);
-        if (toAddress == null || "".equals(toAddress)){
+        if (toAddress == null || "".equals(toAddress)) {
             toEdit.setError("打入账户不能为空");
         }
         value = valueEdit.getText().toString();
-        if (value == null || "".equals(value)){
+        if (value == null || "".equals(value)) {
             toEdit.setError("打入账户不能为空");
         }
         //TODO
         RawTransaction rawTransaction = RawTransaction.createEtherTransaction(
                 nonce, new BigInteger("10"), new BigInteger("200000"), toAddress, new BigInteger(value));
-        byte[] signedMessage = TransactionEncoder.signMessage(rawTransaction,credentials);
+        byte[] signedMessage = TransactionEncoder.signMessage(rawTransaction, credentials);
         Log.d(TAG, "signedMessage: " + signedMessage.length);
         String hexValue = Numeric.toHexString(signedMessage);
         Log.d(TAG, "hexValue: " + hexValue);
@@ -149,11 +151,11 @@ public class Transcation extends AppCompatActivity implements View.OnClickListen
             ethSendTransaction = Config.web3j.ethSendRawTransaction(hexValue).sendAsync().get();
             Log.d(TAG, "transactionHash: " + ethSendTransaction);
             String transactionHash = ethSendTransaction.getTransactionHash();
-            if(transactionHash == null){
+            if (transactionHash == null) {
                 errorText.setVisibility(View.VISIBLE);
-                errorText.setText("交易发送失败，请重试");
-                Log.d(TAG, "transactionHash: " +  ethSendTransaction.getError().getMessage());
-            }else{
+                errorText.setText("交易发送失败，请重试！错误信息：\n" + ethSendTransaction.getError().getMessage());
+                Log.d(TAG, "transactionHash: " + ethSendTransaction.getError().getMessage());
+            } else {
                 Log.d(TAG, "transactionHash: " + transactionHash);
             }
         } catch (InterruptedException e) {
