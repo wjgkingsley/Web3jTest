@@ -17,9 +17,29 @@
 
 #### 使用说明
 
-1. xxxx
-2. xxxx
-3. xxxx
+gradle ：
+allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+  dependencies {
+	        implementation 'com.github.wjgkingsley:Web3jTest:1.0'
+	}
+  
+  maven ：
+  <repositories>
+		<repository>
+		    <id>jitpack.io</id>
+		    <url>https://jitpack.io</url>
+		</repository>
+	</repositories>
+  <dependency>
+	    <groupId>com.github.wjgkingsley</groupId>
+	    <artifactId>Web3jTest</artifactId>
+	    <version>1.0</version>
+	</dependency>
 
 #### 参与贡献
 
